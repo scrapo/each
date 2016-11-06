@@ -1,0 +1,13 @@
+{
+	"name": "each",
+	"description": "each",
+	"repository": "scrapo/each",
+	"version": "1.0.0",
+	"main": "each.js",
+	"scripts": {
+		"test": "mocha --ui tdd test"
+	},
+	"devDependencies": {
+		"mocha": "^3.1.2"
+	}
+}
