@@ -1,22 +1,28 @@
 const strategies = {
-	Array: function (iterable, callback) {
+	Array: function (iterable, callback, filter) {
 		const result = [];
-		for (var i = 0; i < iterable.length; i++) {
-			result.push(callback(iterable[i], i));
-		}
+		iterable.forEach(function (item, i) {
+			const subResult = callback(item, i);
+			if (!filter || subResult) {
+				result.push(subResult);
+			}
+		});
 		return result;
 	},
-	Object: function (iterable, callback) {
+	Object: function (iterable, callback, filter) {
 		const result = {};
 		for (var key in iterable) {
 			if (iterable.hasOwnProperty(key)) {
-				result[key] = callback(iterable[key], key);
+				var subResult = callback(iterable[key], key);
+				if (!filter || subResult) {
+					result[key] = subResult;
+				}
 			}
 		}
 		return result;
 	}
 };
 
-module.exports = function (iterable, callback) {
-	return strategies[iterable.constructor.name](iterable, callback);
+module.exports = function (iterable, callback, filter) {
+	return strategies[iterable.constructor.name](iterable, callback, filter);
 };
